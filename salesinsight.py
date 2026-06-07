@@ -300,7 +300,7 @@ def gerar_visualizacoes(df, metricas, output_dir="outputs/graficos"):
     plt.savefig(caminho, dpi=150)
     plt.show()
     plt.close()
-    print(f"  Gráfico exportado: {caminho}")
+    print("  Gráfico exportado: {caminho}")
 
     print("\n=== VISUALIZAÇÕES GERADAS COM SUCESSO ===")
     
@@ -431,25 +431,14 @@ class AnalisadorComProjecao(AnalisadorDeVendas):
 def executar_callback(df, callback):
     return callback(df)
 
-total = executar_callback(
-    df_limpo,
-    lambda df: df["receita_total"].sum()
-)
-
-print(f"Receita total: R$ {total:,.2f}")
-
 def processar_coluna(df, coluna, funcao_transformacao):
     """
     Aplica uma função de transformação a uma coluna do DataFrame.
     Demonstra o uso de funções como argumentos (higher-order function / callback).
     """
-    df_limpo[f"{coluna}_transformado"] = df_limpo[coluna].apply(funcao_transformacao)
+    df[f"{coluna}_transformado"] = df[coluna].apply(funcao_transformacao) # Changed df_limpo to df
     print(f"  Coluna '{coluna}_transformado' criada com sucesso.")
     return df
-
-# Uso da função com lambda como callback
-df_limpo = processar_coluna(df_limpo, "receita_total", lambda x: round(x / 1000, 2))
-df_limpo = processar_coluna(df_limpo, "quantidade", lambda x: "Alto" if x > 5 else "Baixo")
 
 
 # RF12 – Ler e Escrever Arquivos (CSV e JSON)
@@ -538,6 +527,16 @@ def main():
         .exportar_relatorio()
     )
 
+    # RF11 – Usar Funções Lambda e Funções de Ordem Superior (moved inside main and adapted)
+    total_receita_analisador = executar_callback(
+        analisador.df_limpo,
+        lambda df: df["receita_total"].sum()
+    )
+    print(f"\n[RF11 - Callback] Receita total via callback: R$ {total_receita_analisador:,.2f}")
+
+    analisador.df_limpo = processar_coluna(analisador.df_limpo, "receita_total", lambda x: round(x / 1000, 2))
+    analisador.df_limpo = processar_coluna(analisador.df_limpo, "quantidade", lambda x: "Alto" if x > 5 else "Baixo")
+
     # Etapa extra: limpeza com regex
     analisador.df_limpo = limpar_strings_com_regex(analisador.df_limpo)
 
@@ -554,4 +553,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-    
