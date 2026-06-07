@@ -238,7 +238,7 @@ com poucas linhas de código.
 
 ## 🔗 Repositório
 
-[Inserir link do repositório GitHub aqui]
+https://github.com/cascanio/salesinsight-py
 
 ---
 
