@@ -232,13 +232,13 @@ com poucas linhas de código.
 
 ## 🎬 Vídeo de demonstração
 
-[Inserir link do Google Drive ou YouTube aqui]
+https://www.youtube.com/watch?v=9H5qan0FaGQ
 
 ---
 
 ## 🔗 Repositório
 
-[Inserir link do repositório GitHub aqui]
+https://github.com/cascanio/salesinsight-py
 
 ---
 
